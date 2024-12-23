@@ -41,4 +41,15 @@ class Pokemon:
                     return img_url
                 else:
                     return None
-           
+
+    async def show_shiny(self):
+        # PokeAPI aracılığıyla bir pokémon görüntüsünün URL'sini almak için eşzamansız bir yöntem
+        url = f'https://pokeapi.co/api/v2/pokemon/{self.pokemon_number}'  # İstek için URL API'si
+        async with aiohttp.ClientSession() as session:  # Bir HTTP oturumu açma
+            async with session.get(url) as response:  # GET isteği gönderme
+                if response.status == 200:
+                    data = await response.json()  # JSON yanıtının alınması ve kodunun çözülmesi
+                    sh_url = data['sprites']['front_shiny']
+                    return sh_url
+                else:
+                    return None          
