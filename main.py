@@ -26,12 +26,17 @@ async def go(ctx):
         pokemon = Pokemon(author)  # Yeni bir Pokémon oluşturma
         await ctx.send(await pokemon.info())  # Pokémon hakkında bilgi gönderilmesi
         image_url = await pokemon.show_img()  # Pokémon resminin URL'sini alma
+        shi_url = await pokemon.show_shiny()
         if image_url:
             embed = discord.Embed()  # Gömülü mesajı oluşturma
             embed.set_image(url=image_url)  # Pokémon'un görüntüsünün ayarlanması
             await ctx.send(embed=embed)  # Görüntü içeren gömülü bir mesaj gönderme
         else:
             await ctx.send("Pokémonun görüntüsü yüklenemedi!")
+        if shi_url:
+            embed = discord.Embed()  # Gömülü mesajı oluşturma
+            embed.set_image(url=shi_url)  # Pokémon'un görüntüsünün ayarlanması
+            await ctx.send(embed=embed)  # Görüntü içeren gömülü bir mesaj gönderme
     else:
         await ctx.send("Zaten kendi Pokémonunuzu oluşturdunuz!")  # Bir Pokémon'un daha önce yaratılıp yaratılmadığını gösteren bir mesaj
 # Botun çalıştırılması
