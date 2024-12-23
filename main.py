@@ -3,6 +3,7 @@ from discord.ext import commands
 from config import token
 from logic import Pokemon
 import random
+import aiohttp
 duck = ["100", "200", "301","302", "400", "403", "404", "409", "413", "418", "420", "426", "429", "451", "500"]
 
 # Bot için niyetleri (intents) ayarlama
@@ -46,7 +47,12 @@ async def go(ctx):
 
 @bot.command()
 async def duck(ctx):
-    await ctx.send(random.choice(duck))
+    duck_no = random.choice(duck)
+    url_duck = f"https://random-d.uk/api/http/{duck_no}.jpg"
+    embed = discord.Embed() 
+    embed.set_image(url=url_duck)
+    await ctx.send(embed=embed)
+
 
 
 
