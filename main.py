@@ -37,6 +37,8 @@ async def go(ctx):
             embed = discord.Embed()  # Gömülü mesajı oluşturma
             embed.set_image(url=shi_url)  # Pokémon'un görüntüsünün ayarlanması
             await ctx.send(embed=embed)  # Görüntü içeren gömülü bir mesaj gönderme
+        else:
+            await ctx.send("Pokémonun parlatılmış görüntüsü yüklenemedi!")
     else:
         await ctx.send("Zaten kendi Pokémonunuzu oluşturdunuz!")  # Bir Pokémon'un daha önce yaratılıp yaratılmadığını gösteren bir mesaj
 # Botun çalıştırılması
