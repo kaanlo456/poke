@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from config import token
 from logic import Pokemon
+import random
+duck = ["100", "200", "301","302", "400", "403", "404", "409", "413", "418", "420", "426", "429", "451", "500"]
 
 # Bot için niyetleri (intents) ayarlama
 intents = discord.Intents.default()  # Varsayılan ayarların alınması
@@ -40,6 +42,13 @@ async def go(ctx):
         else:
             await ctx.send("Pokémonun parlatılmış görüntüsü yüklenemedi!")
     else:
-        await ctx.send("Zaten kendi Pokémonunuzu oluşturdunuz!")  # Bir Pokémon'un daha önce yaratılıp yaratılmadığını gösteren bir mesaj
+        await ctx.send("Zaten kendi Pokémonunuzu oluşturdunuz!")  # Bir Pokémon'un daha önce yaratılıp yaratılmadığını gösteren bir mesaj,
+
+@bot.command()
+async def duck(ctx):
+    await ctx.send(random.choice(duck))
+
+
+
 # Botun çalıştırılması
 bot.run(token)

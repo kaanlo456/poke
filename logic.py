@@ -52,4 +52,4 @@ class Pokemon:
                     sh_url = data['sprites']['front_shiny']
                     return sh_url
                 else:
-                    return None          
+                    return None
