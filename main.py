@@ -3,6 +3,7 @@ from discord.ext import commands
 from config import token
 from logic import Pokemon
 import random
+from logic import Wizard, Fighter
 duck = ["100", "200", "301","302", "400", "403", "404", "409", "413", "418", "420", "426", "429", "451", "500"]
 
 # Bot için niyetleri (intents) ayarlama
@@ -25,6 +26,13 @@ async def go(ctx):
     author = ctx.author.name  # Mesaj yazarının adını alma
     # Kullanıcının zaten bir Pokémon'u olup olmadığını kontrol edin. Eğer yoksa, o zaman...
     if author not in Pokemon.pokemons.keys():
+        chance = random.randint(1, 3)
+        if chance == 1:
+            pokemon = Pokemon(author)
+        elif chance == 2:
+            pokemon = Wizard(author)
+        elif chance == 3:
+            pokemon = Fighter(author)
         pokemon = Pokemon(author)  # Yeni bir Pokémon oluşturma
         await ctx.send(await pokemon.info())  # Pokémon hakkında bilgi gönderilmesi
         image_url = await pokemon.show_img()  # Pokémon resminin URL'sini alma
@@ -43,6 +51,21 @@ async def go(ctx):
             await ctx.send("Pokémonun parlatılmış görüntüsü yüklenemedi!")
     else:
         await ctx.send("Zaten kendi Pokémonunuzu oluşturdunuz!")  # Bir Pokémon'un daha önce yaratılıp yaratılmadığını gösteren bir mesaj,
+
+@bot.command()
+async def attack(ctx):
+    target = ctx.message.mentions[0] if ctx.message.mentions else None
+    if target:
+        if target.name in Pokemon.pokemons and ctx.author.name in Pokemon.pokemons:
+            enemy = Pokemon.pokemons[target.name]
+            attacker = Pokemon.pokemons[ctx.author.name]
+            result = await attacker.attack(enemy)
+            await ctx.send(result)
+        else:
+            await ctx.send("Savaşmak için her iki katılımcının da Pokemon'a sahip olması gerekir!")
+    else:
+        await ctx.send("Saldırmak istediğiniz kullanıcıyı etiketleyerek belirtin.")
+
 
 @bot.command()
 async def duck(ctx):
