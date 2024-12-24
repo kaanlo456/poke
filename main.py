@@ -3,7 +3,6 @@ from discord.ext import commands
 from config import token
 from logic import Pokemon
 import random
-import aiohttp
 duck = ["100", "200", "301","302", "400", "403", "404", "409", "413", "418", "420", "426", "429", "451", "500"]
 
 # Bot için niyetleri (intents) ayarlama
