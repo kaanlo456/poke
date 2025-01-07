@@ -3,6 +3,7 @@ from discord.ext import commands
 from config import token
 from logic import Pokemon
 import random
+import datetime
 from logic import Wizard, Fighter
 duck = ["100", "200", "301","302", "400", "403", "404", "409", "413", "418", "420", "426", "429", "451", "500"]
 
@@ -66,10 +67,20 @@ async def attack(ctx):
     else:
         await ctx.send("Saldırmak istediğiniz kullanıcıyı etiketleyerek belirtin.")
 
+@bot.command()
+async def feed(ctx):
+    author = ctx.author.name
+    if author in Pokemon.pokemons:
+        pokemon = Pokemon.pokemons[author]
+        response = await pokemon.feed
+        await ctx.send(response)
+    else:
+        await ctx.send("Pokemonun yok!")
+
 
 @bot.command()
 async def duck(ctx):
-    duck_no = random.choice(duck)
+    duck_no = random.choice(len(duck))
     url_duck = f"https://random-d.uk/api/http/{duck_no}.jpg"
     embed = discord.Embed() 
     embed.set_image(url=url_duck)

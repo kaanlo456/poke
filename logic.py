@@ -1,5 +1,6 @@
 import aiohttp  # Eşzamansız HTTP istekleri için bir kütüphane
 import random
+import datetime
 
 class Pokemon:
     pokemons = {}
@@ -68,9 +69,19 @@ class Pokemon:
                     return sh_url
                 else:
                     return None
+    async def feed(self, feed_interval=20, hp_increase=10):
+        current_time = datetime.now()
+        delta_time = datetime.timedelta(seconds=feed_interval)
+        if (current_time - self.last_feed_time) > delta_time:
+            self.hp += hp_increase
+            self.last_feed_time = current_time
+            return f"Pokémon'un sağlığı geri yüklenir. Mevcut sağlık: {self.hp}"
+        else:
+            return f"Pokémonunuzu şu zaman besleyebilirsiniz: {current_time+delta_time}"
                 
 class Wizard(Pokemon):
-    pass
+    def feed(self, feed_interval=15, hp_increase=10):
+        return super().feed(feed_interval, hp_increase)
 
 class Fighter(Pokemon):
     async def attack(self, enemy):
@@ -79,3 +90,5 @@ class Fighter(Pokemon):
         result = await super().attack(enemy)
         self.power -= super_power
         return result + f"\n dövüşçü pokemon süper saldırı kullandı güç: {super_power}"
+    def feed(self, feed_interval=20, hp_increase=15):
+        return super().feed(feed_interval, hp_increase)
